@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package magazzino;  /* è opzionale */
+
+service Service{    /* servizio */
+
+    rpc preleva(Empty) returns (Item);  /* anche se è vuoto il parametro in ingresso va comunque definito */
+    rpc deposita(Item) returns (StringMessage); /* contiene item da depositare e ritorna la stringa */
+    rpc svuota(Empty) returns (stream Item);    /* è un preleva tutto, consuma tutti i messaggi dalla cosa*/
+                                                /* la chiamata termina quando sono stati ritornati tutti i dati->stream (yield)*/
+
+}
+
+message Item{
+
+    int64 id = 1;       /* ricordare il tag di serializzazione, la numerazione*/
+    string product = 2; /* è importante*/
+}
+
+message StringMessage{
+
+    string value = 1;
+}
+
+message Empty{
+
+}
